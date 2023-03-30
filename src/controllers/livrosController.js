@@ -15,7 +15,7 @@ class LivroController {
         res.status(200).send(livros)
       })
       .catch((err) => {
-        res.status(404).send({message: `${err.message} - id do livro não localizado.`})
+        res.status(404).send({message: `Id do livro não localizado.`})
       })
   }
 
@@ -33,11 +33,12 @@ class LivroController {
     const id = req.params.id;
 
     livros.findByIdAndUpdate(id, {$set: req.body})
-      .then((err) =>{
-        if(!err){
-          res.status(200).send({message: 'Livro atualizado com sucesso!'})
-        }
-      })
+    .then((livro) =>{
+      if(!livro) {
+        return res.status(404).send({ message: 'Livro não encontrado' });
+      }
+      res.status(200).send({message: 'Livro atualizado com sucesso.'});
+    })
       .catch((err) =>{
         res.status(500).send({message: `${err.message} - Não foi possível atualizar o livro!`})
       })
@@ -49,11 +50,12 @@ class LivroController {
     const id = req.params.id
 
     livros.findByIdAndRemove(id)
-      .then((err) =>{
-        if(!err){
-          res.status(204).send({message: 'Livro excluído com sucesso!'})
-        }
-      })
+    .then((livro) =>{
+      if(!livro) {
+        return res.status(404).send({ message: 'Livro não encontrado' });
+      }
+      res.status(200).send({message: 'Livro removido com sucesso.'});
+    })
       .catch((err) => {
         res.status(500).send({message: `${err.message} - Não foi possível remover o livro!`})
       })
