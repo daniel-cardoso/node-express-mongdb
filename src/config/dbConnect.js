@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb+srv://danielcds:Novasenha66@cluster0.1r1hrmv.mongodb.net/node-express-mongodb");
+mongoose.connect(process.env.MONGODB_ATLAS_KEY);
 
 let db = mongoose.connection;
 
